@@ -32,18 +32,30 @@ app.use(async (req, res, next) => {
 
 app.post('/receipts', async (req, res) => {
     try {
-      const receipt = new Receipts ({
-        login: req.body.name,
-        receipts: req.body.receipts
-      })
-      await receipt.save(function(err){
-        if(err) return console.log(err);
-        console.log("Сохранен объект", receipt);
-    });
+        console.log(req.body)
+        let search = ''
+        Receipts.findOne({login: req.body.login}, (err, docs) => {
+            if(err){
+                return console.log(err);
+            } 
+            if (!docs) {
+                const receipt = new Receipts ({
+                    login: req.body.login,
+                    receipts: [req.body.receipts]
+                  })
+                 receipt.save(function(err){
+                    if(err) return console.log(err);
+                    console.log("Сохранен объект", receipt);
+                });
+            } else {
+                return Receipts.receipts.push(req.body.receipts)
+            }
+        })
+
     } catch (err) {
       console.log(err);
-      return res.sendStatus(500);  }
-  })
+      return res.sendStatus(500);  
+    }})
 
   app.get('/receipts', (req, res) => {
     console.log(req.query);
