@@ -69,7 +69,7 @@ app.post('/receipts', async (req, res) => {
         return res.sendStatus(500);
       }
       console.log(docs.receipts)
-      return res.send(docs);
+      return res.send(docs.receipts);
     })
   })
 
