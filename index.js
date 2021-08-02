@@ -40,7 +40,6 @@ app.post('/receipts', async (req, res) => {
             if(err){
                 return console.log(err);
             } 
-            console.log(obj)
             if (!obj) {
                 const receipt = new Receipts ({
                     userLogin: loginQ,
@@ -52,7 +51,9 @@ app.post('/receipts', async (req, res) => {
                 });
             } else {
                 const index = obj.receipts.indexOf(receiptsQ)
+                
                 if (index === -1) {
+                  console.log('index ' + index)
                   obj.receipts.push(receiptsQ)
                 } else {
                   obj.receipts.splice(index, 1);
@@ -79,12 +80,27 @@ app.post('/receipts', async (req, res) => {
     })
   })
 
+  app.get('/receipt-for-one', (req, res) => {
+    const loginQ = req.body.login || req.query.login
+    const receiptsQ = req.body.receipts || req.query.receipts
+    Receipts.findOne({userLogin: loginQ}, (err, obj) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(500);
+      }
+      let result = false
+      const index = obj.receipts.indexOf(receiptsQ)
+      if (index !== -1) {
+        result = true
+      } 
+      console.log('result' + result)
+      return res.send(result);
+    })
+  })
+
   mongoose.set('useCreateIndex', true);
 
   const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_CLUSTER}.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-  //const uri = "mongodb+srv://user_34:b5rPniU429Qd8d3n@cluster0.xpo9w.mongodb.net/<dbname>?retryWrites=true&w=majority";
-
-  //const uri = 'mongodb://localhost/test';
   mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
