@@ -51,7 +51,13 @@ app.post('/receipts', async (req, res) => {
                     console.log("Сохранен объект", receipt);
                 });
             } else {
-                obj.receipts.push(receiptsQ)
+                const index = obj.receipts.indexOf(receiptsQ)
+                if (index === -1) {
+                  obj.receipts.push(receiptsQ)
+                } else {
+                  obj.receipts.splice(index, 1);
+                }
+                console.log(obj.receipts)
                 return obj.save()
             }
         })
