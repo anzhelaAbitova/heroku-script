@@ -68,7 +68,7 @@ app.post('/receipts', async (req, res) => {
         console.log(err);
         return res.sendStatus(500);
       }
-      console.log(docs)
+      console.log(docs.receipts)
       return res.send(docs);
     })
   })
