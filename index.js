@@ -32,23 +32,27 @@ app.use(async (req, res, next) => {
 
 app.post('/receipts', async (req, res) => {
     try {
-        console.log(req.body)
+        const loginQ = req.body.login || req.query.login
+        const receiptsQ = req.body.receipts || req.query.receipts
+        console.log(req.query)
         let search = ''
-        Receipts.findOne({login: req.body.login}, (err, docs) => {
+        Receipts.findOne({userLogin: loginQ}, (err, obj) => {
             if(err){
                 return console.log(err);
             } 
-            if (!docs) {
+            console.log(obj)
+            if (!obj) {
                 const receipt = new Receipts ({
-                    login: req.body.login,
-                    receipts: [req.body.receipts]
+                    userLogin: loginQ,
+                    receipts: [receiptsQ]
                   })
                  receipt.save(function(err){
                     if(err) return console.log(err);
                     console.log("Сохранен объект", receipt);
                 });
             } else {
-                return Receipts.receipts.push(req.body.receipts)
+                obj.receipts.push(receiptsQ)
+                return obj.save()
             }
         })
 
@@ -58,12 +62,13 @@ app.post('/receipts', async (req, res) => {
     }})
 
   app.get('/receipts', (req, res) => {
-    console.log(req.query);
-    Receipts.findOne({login: req.query.login}, (err, docs) => {
+    const loginQ = req.body.login || req.query.login
+    Receipts.findOne({userLogin: loginQ}, (err, docs) => {
       if (err) {
         console.log(err);
         return res.sendStatus(500);
       }
+      console.log(docs)
       return res.send(docs);
     })
   })
