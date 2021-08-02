@@ -11,7 +11,6 @@ const methodOverride = require('method-override');
 const flash = require('express-flash')
 const session = require('express-session')
 //const MongoStore = require('connect-mongo')(session);
-const connect = require('./mongoConnection');
 const cors = require('cors');
 const Receipts = require('./models/receipts').Receipts;
 
@@ -27,7 +26,6 @@ app.use(methodOverride('_method'))
 app.use(async (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://anastashasuvorova.ru');
     res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-    res.setHeader("Access-Control-Allow-Credentials", true);
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
   });
