@@ -30,6 +30,8 @@ app.use(async (req, res, next) => {
     next();
   });
 
+app.use(cors());
+
 app.post('/receipts', async (req, res) => {
     try {
         const loginQ = req.body.login || req.query.login
