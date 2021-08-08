@@ -22,15 +22,18 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(flash())
 app.use(cors())
 app.use(methodOverride('_method'))
+app.use(cors())
 
 app.use(async (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://anastashasuvorova.ru');
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
-
-app.use(cors());
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+  )
+  next()
+})
 
 app.post('/receipts', async (req, res) => {
     try {
