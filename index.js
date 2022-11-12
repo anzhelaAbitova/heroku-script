@@ -75,13 +75,21 @@ app.post('/receipts', async (req, res) => {
 
   app.get('/receipts', (req, res) => {
     const loginQ = req.body.login || req.query.login
-    Receipts.findOne({userLogin: loginQ}, (err, docs) => {
+    // Receipts.findOne({userLogin: loginQ}, (err, docs) => {
+    //   if (err) {
+    //     console.log(err);
+    //     return res.sendStatus(500);
+    //   }
+    //   console.log(docs.receipts)
+    //   return res.send(docs.receipts);
+    // })
+    Receipts.find({}, (err, docs) => {
       if (err) {
         console.log(err);
         return res.sendStatus(500);
       }
-      console.log(docs.receipts)
-      return res.send(docs.receipts);
+      console.log(docs)
+      return res.send(docs);
     })
   })
 
