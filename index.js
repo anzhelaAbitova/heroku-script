@@ -156,50 +156,33 @@
 
 
 
-// Load the AWS SDK for Node.js
-var AWS = require('aws-sdk');
-// Set the region 
-AWS.config.update({region: process.env.REGION});
+// example.js
 
-// Create the DynamoDB service object
-var ddb = new AWS.DynamoDB({apiVersion: '2022-11-11'});
+const CyclicDB = require('cyclic-dynamodb')
+const db = CyclicDB("frantic-puce-earmuffsCyclicDB") // find it on the Database/Storage tab
 
-var params = {
-  AttributeDefinitions: [
-    {
-      AttributeName: "userLogin", //ATTRIBUTE_NAME_1
-      AttributeType: "S", //ATTRIBUTE_TYPE
-    },
-    {
-      AttributeName: "Episode", //ATTRIBUTE_NAME_2
-      AttributeType: "SS", //ATTRIBUTE_TYPE
-    },
-  ],
-  KeySchema: [
-    {
-      AttributeName: "userLogin", //ATTRIBUTE_NAME_1
-      KeyType: "HASH",
-    },
-    {
-      AttributeName: "receipts", //ATTRIBUTE_NAME_2
-      KeyType: "RANGE",
-    },
-  ],
-  ProvisionedThroughput: {
-    ReadCapacityUnits: 1,
-    WriteCapacityUnits: 1
-  },
-  TableName: "frantic-puce-earmuffsCyclicDB",
-  StreamSpecification: {
-    StreamEnabled: false
-  }
-};
+const run = async function () {
+  let receipts = db.collection('receipts')
 
-// Call DynamoDB to create the table
-ddb.createTable(params, function(err, data) {
-  if (err) {
-    console.log("Error", err);
-  } else {
-    console.log("Table Created", data);
-  }
-});
+  // create an item in collection with key "leo"
+  let leo = await receipts.set('example@gmail.com', {
+    receipts: [
+      "receipts-fav-188",
+      "receipt-fav-227",
+      "receipt-fav-235",
+      "receipt-fav-1",
+      "receipt-fav-231",
+      "receipt-fav-23",
+      "receipt-fav-17",
+      "receipt-fav-25",
+      "receipt-fav-36",
+      "receipt-fav-15",
+      "receipt-fav-238"
+    ]
+  })
+
+  // get an item at key "leo" from collection receipts
+  let item = await receipts.get('example@gmail.com')
+  console.log(item)
+}
+run()
