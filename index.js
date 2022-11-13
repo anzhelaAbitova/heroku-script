@@ -24,8 +24,7 @@ var corsOptions = {
   origin: 'https://anastashasuvorova.ru',
   optionsSuccessStatus: 200,
   methods: 'GET, PUT, POST, DELETE',
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-  credentials: true
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
 }
 // app.use(async (req, res, next) => {
 
