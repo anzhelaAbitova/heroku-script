@@ -155,19 +155,16 @@
 // console.log('Server running on port 3000');
 
 
-// Create service client module using ES6 syntax.
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-// Set the AWS Region.
-const REGION = process.env.REGION; 
-// Create an Amazon DynamoDB service client object.
-const ddbClient = new DynamoDBClient({ region: REGION });
 
-// Import required AWS SDK clients and commands for Node.js
-import { CreateTableCommand } from "@aws-sdk/client-dynamodb";
+// Load the AWS SDK for Node.js
+var AWS = require('aws-sdk');
+// Set the region 
+AWS.config.update({region: process.env.REGION});
 
+// Create the DynamoDB service object
+var ddb = new AWS.DynamoDB({apiVersion: '2022-11-11'});
 
-// Set the parameters
-export const params = {
+var params = {
   AttributeDefinitions: [
     {
       AttributeName: "userLogin", //ATTRIBUTE_NAME_1
@@ -190,21 +187,19 @@ export const params = {
   ],
   ProvisionedThroughput: {
     ReadCapacityUnits: 1,
-    WriteCapacityUnits: 1,
+    WriteCapacityUnits: 1
   },
-  TableName: "frantic-puce-earmuffsCyclicDB", //TABLE_NAME
+  TableName: "frantic-puce-earmuffsCyclicDB",
   StreamSpecification: {
-    StreamEnabled: false,
-  },
-};
-
-export const run = async () => {
-  try {
-    const data = await ddbClient.send(new CreateTableCommand(params));
-    console.log("Table Created", data);
-    return data;
-  } catch (err) {
-    console.log("Error", err);
+    StreamEnabled: false
   }
 };
-run();
+
+// Call DynamoDB to create the table
+ddb.createTable(params, function(err, data) {
+  if (err) {
+    console.log("Error", err);
+  } else {
+    console.log("Table Created", data);
+  }
+});
