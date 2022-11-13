@@ -382,12 +382,12 @@ const calcFromStock = (query) => {
                                 console.log('result', result)
                                 popupCssFix(result)
                                 setTimeout(() => {
-                                    console.log($('#rec320823606 .popup-receipt-container'))
                                     $('.popup-back').off().on('click', (e) => {
                                         t390_closePopup('#rec320918600'.replace(/[^0-9]/gim, ""))
                                     })
                                     $('.popup-add-fav').off().on('click', function (e) {
                                         const idF = $(this).attr('id')
+                                        console.log('idF', idF)
                                         const receiptToSend = {
                                             login: login,
                                             receipts: idF,

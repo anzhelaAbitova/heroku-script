@@ -40,7 +40,7 @@ app.post('/receipts', async (req, res) => {
     console.log(receiptsQ, oldReceipts)
     let item = await receipts.set(loginQ, {
       receipts: [
-        isDelete ? deleteReceipt(oldReceipts) : [].concat(oldReceipts?.props?.receipts, [receiptsQ])
+        isDelete ? deleteReceipt(oldReceipts) : [].concat(oldReceipts?.props?.receipts || [], [receiptsQ])
       ]
     })
     console.log(item)
