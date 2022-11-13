@@ -1,17 +1,17 @@
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config()
-// }
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
-// const express = require('express')
-// const app = express()
+const express = require('express')
+const app = express()
 // const bodyParser = require('body-parser');
 // const methodOverride = require('method-override');
 // const flash = require('express-flash')
 // const cors = require('cors');
 // const Receipts = require('./models/receipts').Receipts;
-
-// const host = '127.0.0.1'
-// const port = process.env.PORT || 3000;
+let dynamoRoute = require('./dynamo');
+const host = '127.0.0.1'
+const port = process.env.PORT || 3000;
 
 // app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({ extended: false }))
@@ -52,7 +52,7 @@
 //                 });
 //             } else {
 //                 const index = obj.receipts.indexOf(receiptsQ)
-                
+
 //                 if (index === -1) {
 //                   console.log('index ' + index)
 //                   obj.receipts.push(receiptsQ)
@@ -108,5 +108,6 @@
 //   db.once('open', function() {
 //     console.log(`we're connected!`);
 //   });
-//   app.listen(port);
+app.use('/', dynamoRoute);
+app.listen(port);
 //   console.log('Server running on port 3000');
