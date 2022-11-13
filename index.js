@@ -21,7 +21,7 @@ app.use(cors())
 
 app.use(async (req, res, next) => {
   console.log(req)
-  if (req.xhr) {
+  // if (req.xhr) {
     res.setHeader('Access-Control-Allow-Origin', 'https://anastashasuvorova.ru/')
     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
     res.setHeader('Access-Control-Allow-Credentials', true)
@@ -30,9 +30,9 @@ app.use(async (req, res, next) => {
       'Origin, X-Requested-With, Content-Type, Accept, Authorization',
     )
     next()
-  } else {
-    res.status(400).end('400 Bad Request')
-  }
+  // } else {
+  //   res.status(400).end('400 Bad Request')
+  // }
 })
 
 app.post('/receipts', async (req, res) => {

@@ -369,8 +369,7 @@ const calcFromStock = (query) => {
                     const isFav = async (obj) => {
                         let json = ''
                         if (login) {
-                            await fetch(`https://long-cyan-antelope-hose.cyclic.app/receipt-for-one?login=${login}&receipts=receipt-fav-${id}`,
-                            {mode: "no-cors"})
+                            await fetch(`https://long-cyan-antelope-hose.cyclic.app/receipt-for-one?login=${login}&receipts=receipt-fav-${id}`)
                             .then(async (response) => {
                                 return await response.json();
                               })
