@@ -348,13 +348,9 @@ const calcFromStock = (query) => {
                 main.append(slider)
                 main.append('<div class="result-receipts-count"></div>')
 
-                const popupCssFix = (heightC) => {
+                const popupCssFix = (heightC = 0) => {
                     console.log(heightC, 'heightC')
-                    if (heightC) {
-                        $('#rec320918600 .t-popup__container').css({height: (heightC + 200) + 'px'})
-                    } else {
-                        $('#rec320918600 .t-popup__container').css({height: (600 + 200) + 'px'})
-                    }
+                    $('#rec320918600 .t-popup__container').css({height: ((heightC < 600 ? 600 : heightC)+ 200) + 'px'})
                 }
                 startReceiptSlider(arr.length / numCard, queryS)
                 $('.receipt-link').click(function(e) {
@@ -371,7 +367,7 @@ const calcFromStock = (query) => {
                         if (login) {
                             await fetch(`https://long-cyan-antelope-hose.cyclic.app/receipt-for-one?login=${login}&receipts=receipt-fav-${id}`)
                             .then(async (response) => {
-                                return await response.json();
+                                json = await response.json();
                               })
                             .catch((err)=> console.log(err))
                         }
@@ -388,9 +384,11 @@ const calcFromStock = (query) => {
                                     
                                 }
                                 $('#rec320823606').append(receiptPopup(receipts[parseInt(id)], added))
+                                console.log('outerHeight', $('#rec320823606 .popup-receipt-container').outerHeight())
                                 return $('#rec320823606 .popup-receipt-container').outerHeight();
                         })
                         .then(result => {
+                            console.log('result', result)
                             popupCssFix(result)
                             setTimeout(() => {
                                 console.log($('#rec320823606 .popup-receipt-container'))
@@ -401,13 +399,13 @@ const calcFromStock = (query) => {
                                     const idF = $(this).attr('id')
                                     const receiptToSend = {
                                         login: login,
-                                        receipts: idF
+                                        receipts: idF,
+                                        isDelete: false
                                     }
                                     if (!getLs(idF)) {
                                         setLs(idF, idF)
                                         const sendFavToServer = async (obj) => {
                                             try{
-                                                const login = getLogin().login
                                                 let response = await fetch('https://long-cyan-antelope-hose.cyclic.app/receipts', {
                                                   method: 'POST',
                                                   headers: {

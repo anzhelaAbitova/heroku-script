@@ -53,43 +53,26 @@ $(document).ready(function () {
         }
 
         const makeFavList = async () => {
-
-            const getFavList = () => {
-                let values = [],
-                    keys = Object.keys(localStorage),
-                    i = keys.length;
-                while (i--) {
-                    if (localStorage.getItem(keys[i]).match(/receipt-fav-/)) {
-                        let idR = localStorage.getItem(keys[i]).replace(/\D/gi, '')
-                        values.push(parseInt(idR));
-                        //console.log(localStorage.getItem(keys[i]).match(/receipt-fav-/))
-
-                    }
-                }
-
-                return values;
-            }
-
-            const getKeyByValue = (object, value) => {
-                return Object.keys(object).find(key => object[key] === value);
-            }
             const getFavFromServer = async (obj) => {
                 let json = ''
                 await fetch(`https://long-cyan-antelope-hose.cyclic.app/receipts?login=${obj}`)
                     .then(async (response) => {
-                        return await response.json();
+                        console.log('response', response)
+                        json =  await response.json();
                     })
                     .catch((err) => console.log(err))
-
+                console.log('json', json)
                 return json
             }
-            const arr = getFavList()
             const loginQ = getLogin().login
             const arrServer = await getFavFromServer(loginQ)
+            console.log('arrServer', arrServer)
             const favFromServer = (res) => {
+                const receiptsArray = res?.props?.receipts.flat(1);
+                console.log('favFromServer', receiptsArray)
                 let result = []
-                if (res) {
-                    res.forEach((el) => {
+                if (receiptsArray) {
+                    receiptsArray.forEach((el) => {
                         let idR = el.replace(/\D/gi, '')
                         result.push(receipts[parseInt(idR)])
                     })
@@ -281,16 +264,28 @@ $(document).ready(function () {
                                     $('.popup-add-fav').off().on('click', function (e) {
                                         const idF = $(this).attr('id')
                                         if (getLs(idF)) {
+                                            const receiptToSend = {
+                                                login: login,
+                                                receipts: idF,
+                                                isDelete: true
+                                            }
                                             removeLs(idF)
                                             const isFav = async (obj) => {
                                                 const login = getLogin().login
                                                 let json = ''
                                                 if (login) {
-                                                    await fetch(`https://long-cyan-antelope-hose.cyclic.app/receipt-for-one?login=${login}&receipts=receipt-fav-${id}`)
-                                                        .then(async (response) => {
-                                                            return await response.json();
-                                                        })
-                                                        .catch((err) => console.log(err))
+                                                    try{
+                                                        let response = await fetch('https://long-cyan-antelope-hose.cyclic.app/receipts', {
+                                                          method: 'POST',
+                                                          headers: {
+                                                            'Content-Type': 'application/json;charset=utf-8'
+                                                          },
+                                                          body: JSON.stringify(obj)
+                                                        });
+                                                        console.log(response)
+                                                    } catch(err) {
+                                                        console.log(err)
+                                                    }
                                                 }
 
                                                 return json
@@ -327,10 +322,6 @@ $(document).ready(function () {
                 console.log(e)
             }
         }
-        //const one = makeFavList()
-        //const rest = Array(15).fill(...one)
-        //const rest = receipts.slice(0, 15)
-
 
         const mediaQuery1 = window.matchMedia('(max-width: 960px)');
         const mediaQuery2 = window.matchMedia('(max-width: 640px)');
@@ -392,15 +383,10 @@ $(document).ready(function () {
     makeFavPage()
     let idJquery
     let width = $(window).outerWidth()
-    let height = $(window).outerHeight()
     function jqueryResize() {
         queries.length = 0
-        //queries.push(mediaQuery1.matches, mediaQuery2.matches, mediaQuery3.matches, mediaQuery4.matches)
-        console.log(event)
         try {
-            //$('#rec333646716').append(makeSearchResults('', makeFavList(), false))
             makeFavPage()
-            //(desktop) ? measureCSS(3) : measureCSS(1)
         } catch (e) {
             console.log(e)
         }
@@ -413,5 +399,4 @@ $(document).ready(function () {
         }
 
     });
-    //makeSlider()
 })
