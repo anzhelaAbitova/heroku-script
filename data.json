@@ -1,32 +1,44 @@
 [
-    { "receipts": [ "receipts-fav-188",
-       "receipt-fav-227",
-       "receipt-fav-235",
-       "receipt-fav-1",
-       "receipt-fav-231",
-       "receipt-fav-23",
-        "receipt-fav-17",
-        "receipt-fav-25",
-       "receipt-fav-36",
-        "receipt-fav-15",
-        "receipt-fav-238"
+    {
+        "receipts": [
+            "receipts-fav-188",
+            "receipt-fav-227",
+            "receipt-fav-235",
+            "receipt-fav-1",
+            "receipt-fav-231",
+            "receipt-fav-23",
+            "receipt-fav-17",
+            "receipt-fav-25",
+            "receipt-fav-36",
+            "receipt-fav-15",
+            "receipt-fav-238"
         ],
-    "userLogin": "anzhela.abitova@mail.ru",
+        "userLogin": "anzhela.abitova@mail.ru"
     },
-    { "receipts": [ "receipt-fav-10", "receipt-fav-7"
+    {
+        "receipts": [
+            "receipt-fav-10",
+            "receipt-fav-7"
         ],
-    "userLogin": "evs.margarita@gmail.com",
+        "userLogin": "evs.margarita@gmail.com"
     },
-    { "receipts": [ "receipt-fav-213"
+    {
+        "receipts": [
+            "receipt-fav-213"
         ],
-    "userLogin": "voronixin2011@yandex.ru",
+        "userLogin": "voronixin2011@yandex.ru"
     },
-    { "receipts": [ "receipt-fav-179"
+    {
+        "receipts": [
+            "receipt-fav-179"
         ],
-     "userLogin": "olga.lep2011@yandex.ru",
+        "userLogin": "olga.lep2011@yandex.ru"
     },
-    { "receipts": [ "receipt-fav-27", "receipt-fav-16"
+    {
+        "receipts": [
+            "receipt-fav-27",
+            "receipt-fav-16"
         ],
-    "userLogin": "denisevichviktoriya@gmail.com",
+        "userLogin": "denisevichviktoriya@gmail.com"
     }
 ]
