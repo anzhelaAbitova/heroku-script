@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors');
 const app = express()
 app.use(cors())
 // let AWS = require('aws-sdk');
@@ -6,7 +7,7 @@ app.use(cors())
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const flash = require('express-flash')
-const cors = require('cors');
+
 const { v4: uuidv4 } = require('uuid');
 const CyclicDB = require('cyclic-dynamodb')
 const db = CyclicDB("long-cyan-antelope-hoseCyclicDB") 
