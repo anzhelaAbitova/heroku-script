@@ -51,9 +51,18 @@ app.post('/receipts', async (req, res) => {
   try {
     const loginQ = req.body.login || req.query.login
     const receiptsQ = req.body.receipts || req.query.receipts
-    let item = await receipts.get(loginQ)
-    console.log(req.query)
-    return res.send(item || {});
+    let item = await receipts.set(loginQ, {
+      receipts: [
+        receiptsQ
+      ]
+    })
+    console.log(item)
+      if (!item) {
+        console.error("Unable to add item.");
+        console.error("Error JSON:", JSON.stringify(err, null, 2));
+      } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+      }
 //     let search = ''
 //     // Receipts.findOne({userLogin: loginQ}, (err, obj) => {
 //     //     if(err){
