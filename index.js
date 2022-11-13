@@ -12,7 +12,6 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const flash = require('express-flash')
 
-const { v4: uuidv4 } = require('uuid');
 const CyclicDB = require('cyclic-dynamodb')
 const db = CyclicDB("long-cyan-antelope-hoseCyclicDB")
 let receipts = db.collection('receipts')

@@ -24,7 +24,7 @@ const calcFromStock = (query) => {
         const getLogin = () => {
             const arr = Object.keys(localStorage);
             const lKey = arr.find((el) => /tilda_members_profile/.test(el) && !/timestamp/.test(el));
-            
+
             return JSON.parse(window.localStorage.getItem(lKey) || '{}');
         }
 
@@ -33,11 +33,11 @@ const calcFromStock = (query) => {
         const removeLs = (name, subst = null) => JSON.parse(window.localStorage.removeItem(name) || subst)
         let catIn = 0
         const resetCalc = (queryR) => {
-            for(let i = 0; i < productList.length; i++) {
+            for (let i = 0; i < productList.length; i++) {
                 productList[i] = {}
             }
-            $('.dish-list input').each(function() {
-                $(this).prop('checked',false);
+            $('.dish-list input').each(function () {
+                $(this).prop('checked', false);
             });
             measureCheck = true
             $('#rec317028063').hide()
@@ -50,8 +50,8 @@ const calcFromStock = (query) => {
                 $('#rec317292231').addClass('well-hidden')
             }
         }
-        for(let i = 0; i < categoriesProducts.length; i++) {
-            for(let j = 0; j < categoriesProducts[i].length; j++) {
+        for (let i = 0; i < categoriesProducts.length; i++) {
+            for (let j = 0; j < categoriesProducts[i].length; j++) {
                 categoriesProducts[i][j].id = catIn
                 catIn++
             }
@@ -76,7 +76,7 @@ const calcFromStock = (query) => {
             let currentSlide = $('.result-receipts-slider').slick('slickCurrentSlide') + 1;
             let count = $(".result-receipts-slider").slick("getSlick").slideCount
             pages.text(`${currentSlide}/${count}`)
-            slider.on('init reInit afterChange', function(event, slick, currentSlide, nextSlide){
+            slider.on('init reInit afterChange', function (event, slick, currentSlide, nextSlide) {
                 let i = (currentSlide ? currentSlide : 0) + 1;
                 pages.text(i + '/' + slick.slideCount);
             });
@@ -106,7 +106,7 @@ const calcFromStock = (query) => {
             })
             return result
         }
-        
+
         const receiptPopup = (obj, added) => {
             let result = `<div class="popup-receipt-container">
                     <div class="tn-elem popup-receipt-image" data-elem-type="image">
@@ -123,22 +123,22 @@ const calcFromStock = (query) => {
                         </div>
                         <div class="tn-elem popup-receipt-ingredients" data-elem-type="text">
                             <ul>`
-                            if (obj.ingredients) {
-                                obj.ingredients.forEach((el) => {
-                                    result += `<li><div class="tn-atom" field="tn_text_1622377770713">- ${el.measure} ${el.product}</div></li>`
-                                }) 
-                            } else if (obj.forPart) {
-                                
-                                obj.forPart.forEach((el) => {
-                                    result += ` <li><div class="tn-atom" field="tn_text_1622377770713">${el.partName}</div></li>`
-                                    el.ingredients.forEach((elI) => {
-                                        result += `<li><div class="tn-atom" field="tn_text_1622377770713">- ${elI.measure} ${elI.product}</div></li>`
-                                    })
-                                }) 
-                            }
+            if (obj.ingredients) {
+                obj.ingredients.forEach((el) => {
+                    result += `<li><div class="tn-atom" field="tn_text_1622377770713">- ${el.measure} ${el.product}</div></li>`
+                })
+            } else if (obj.forPart) {
 
-                                
-                            result += `</ul>
+                obj.forPart.forEach((el) => {
+                    result += ` <li><div class="tn-atom" field="tn_text_1622377770713">${el.partName}</div></li>`
+                    el.ingredients.forEach((elI) => {
+                        result += `<li><div class="tn-atom" field="tn_text_1622377770713">- ${elI.measure} ${elI.product}</div></li>`
+                    })
+                })
+            }
+
+
+            result += `</ul>
                             
                         </div>
                         <div class="tn-elem popup-bigger-text" data-elem-type="text">
@@ -146,19 +146,19 @@ const calcFromStock = (query) => {
                         </div>
                         <div class="tn-elem popup-receipt-steps"data-elem-type="text">
                             <ul>`
-                            obj.steps.forEach((el) => {
-                                result += `<li><div class="tn-atom" field="tn_text_1622378070692">${el}</div></li>`
-                            })
-                                
-                            result += `</ul>
+            obj.steps.forEach((el) => {
+                result += `<li><div class="tn-atom" field="tn_text_1622378070692">${el}</div></li>`
+            })
+
+            result += `</ul>
                         </div>
                         <div class="tn-elem popup-receipt-btn">
                             <div class="tn-elem popup-back"
                                 data-elem-type="button">
                                 <div class="tn-atom">Назад</div>
                             </div>`
-                            if (added) {
-                                result += `<div class="tn-elem popup-add-fav popup-favorities" id="receipt-fav-${obj.id}">
+            if (added) {
+                result += `<div class="tn-elem popup-add-fav popup-favorities" id="receipt-fav-${obj.id}">
                                 <div class="tn-atom">
                                 <a href="/favorites">
                                 <img class="tn-atom__img t-img loaded" 
@@ -168,30 +168,30 @@ const calcFromStock = (query) => {
                                     </a>
                                 </div>
                                 <div class="tn-atom" field="tn_text_1622382423650"><a href="/favorites">Добавлено в избранное</a></div>`
-                            } else {
-                                result += `<div class="tn-elem popup-add-fav popup-favorities" id="receipt-fav-${obj.id}">
+            } else {
+                result += `<div class="tn-elem popup-add-fav popup-favorities" id="receipt-fav-${obj.id}">
                                 <div class="tn-atom"> <img class="tn-atom__img t-img loaded"
                                         data-original="https://static.tildacdn.com/tild3632-3738-4466-a362-353766396335/photo.svg"
                                         imgfield="tn_img_1622382395420"
                                         src="https://static.tildacdn.com/tild3632-3738-4466-a362-353766396335/photo.svg"> 
                                 </div>
                                 <div class="tn-atom" field="tn_text_1622382423650">Добавить в избранное</div>`
-                            }
-                            
-                            result += `</div>
+            }
+
+            result += `</div>
                         </div>
                     </div>
                 </div>`
-                return result
+            return result
         }
 
         const searchReceipt = (products, receipts) => {
             try {
                 const result = []
-                
+
                 const uniqueResult = (arr) => {
-                    const flags  = {};
-                    const uResult = arr.filter(function(entry) {
+                    const flags = {};
+                    const uResult = arr.filter(function (entry) {
                         if (flags[entry.id]) {
                             //console.log('not-unique', flags[entry.id])
                             return false;
@@ -201,7 +201,7 @@ const calcFromStock = (query) => {
                     });
                     return uResult
                 }
-                
+
                 const searchName = (productN, ingredientN) => {
                     let resultN = false
                     if (productN.match(/\^/g)) {
@@ -223,18 +223,18 @@ const calcFromStock = (query) => {
                     } else {
                         const elName = productN.toLowerCase()
                         const objName = ingredientN.toLowerCase()
-                        
+
                         resultN = objName.includes(elName)
                     }
                     return resultN
                 }
-                
+
                 const searchMeasure = (productM, ingredientM) => {
                     const meas = productM
                     const receipt = ingredientM
                     const regex = new RegExp(meas, 'g');
                     const matchArr = parseInt(meas.replace(/\D/g, '')) >= parseInt(receipt.replace(/\D/g, ''))
-                    
+
                     return matchArr
                 }
 
@@ -286,151 +286,142 @@ const calcFromStock = (query) => {
         }
 
         const makeSearchResults = (main, arr, queryS) => {
-            try{
-            if (arr) {
-                //console.log(arr)
-                let numCard = 0
-                if (query <= 1) {
-                    numCard = 5
-                } else {
-                    numCard = 3
-                }
-                const slideReceipt = (array) => {
-                    const midResult = []
-                    const slidesDom = []
-                    const images = []
-                    const links = []
-                    for(let i = 0; i < arr.length / numCard; i++) {
-                        midResult.push('<div class="receipt-result-slide-wrapper"><div class="receipt-result-slide">')
-                        midResult.push('</div></div>')
-                        for(let j = 0; j < numCard; j++) {
-                            if (array[i * numCard + j]) {
-                                images.push(`<div class="t396__elem receipt-image tn-elem" 
+            try {
+                if (arr) {
+                    //console.log(arr)
+                    let numCard = 0
+                    if (query <= 1) {
+                        numCard = 5
+                    } else {
+                        numCard = 3
+                    }
+                    const slideReceipt = (array) => {
+                        const midResult = []
+                        const slidesDom = []
+                        const images = []
+                        const links = []
+                        for (let i = 0; i < arr.length / numCard; i++) {
+                            midResult.push('<div class="receipt-result-slide-wrapper"><div class="receipt-result-slide">')
+                            midResult.push('</div></div>')
+                            for (let j = 0; j < numCard; j++) {
+                                if (array[i * numCard + j]) {
+                                    images.push(`<div class="t396__elem receipt-image tn-elem" 
                                 data-elem-type="image">
                                 <div class="tn-atom"> <img class="tn-atom__img t-img loaded"
                                         data-original="${array[i * numCard + j].image}" imgfield="tn_img_1622325506285"
                                         src="${array[i * numCard + j].image}"> </div>
                                 </div>`)
-                                links.push(`<div class="t396__elem receipt-link loaded tn-elem"
+                                    links.push(`<div class="t396__elem receipt-link loaded tn-elem"
                                 id="${array[i * numCard + j].id}"
                                 data-elem-type="button"> <a class=" tn-atom"
                                 href="#popup:recept">Рецепт</a> </div>`)
-                            } else {
-                                images.push(`<div class="t396__elem receipt-image tn-elem" 
+                                } else {
+                                    images.push(`<div class="t396__elem receipt-image tn-elem" 
                                 data-elem-type="image">
                                 <div class="tn-atom"> </div>
                                 </div>`)
-                                links.push(`<div class="t396__elem receipt-link tn-elem"
+                                    links.push(`<div class="t396__elem receipt-link tn-elem"
                                 data-elem-type="button"></div>`)
+                                }
+
                             }
-
                         }
+                        for (let i = 0; i < arr.length / numCard; i++) {
+                            const temp = [midResult[i * 2], images.slice(i * numCard, numCard * (i + 1)).join(''), links.slice(i * numCard, numCard * (i + 1)).join(''), midResult[i * 2 + 1]]
+                            slidesDom.push(temp.join(''))
+                        }
+                        return slidesDom
                     }
+                    const receiptSlides = slideReceipt(arr)
+                    const createSlider = () => {
+                        return $('<div>', {
+                            class: "result-receipts-slider",
+                        });
+                    }
+
+                    const slider = createSlider()
+                    main.html('')
                     for (let i = 0; i < arr.length / numCard; i++) {
-                        const temp = [midResult[i*2], images.slice(i * numCard, numCard * (i + 1)).join(''), links.slice(i * numCard, numCard * (i + 1)).join(''), midResult[i * 2 + 1]]
-                        slidesDom.push(temp.join(''))
+                        slider.append(receiptSlides[i])
                     }
-                return slidesDom
-                }
-                const receiptSlides = slideReceipt(arr)
-                const createSlider = () => {
-                    return $('<div>', {
-                        class: "result-receipts-slider",
-                    });
-                }
 
-                const slider = createSlider()
-                main.html('')
-                for (let i = 0; i < arr.length / numCard; i++) {
-                    slider.append(receiptSlides[i])
-                }
-                
-                main.append(slider)
-                main.append('<div class="result-receipts-count"></div>')
+                    main.append(slider)
+                    main.append('<div class="result-receipts-count"></div>')
 
-                const popupCssFix = (heightC = 0) => {
-                    console.log(heightC, 'heightC')
-                    $('#rec320918600 .t-popup__container').css({height: ((heightC < 600 ? 600 : heightC)+ 200) + 'px'})
-                }
-                startReceiptSlider(arr.length / numCard, queryS)
-                $('.receipt-link').click(function(e) {
-                    const id = $(this).attr('id')
-                    $('#rec320823606').html('')
-                    console.log($('#rec320823606 .popup-receipt-container').length)
-                    if ($('#rec320823606 .popup-receipt-container').length) {
-                        $('#rec320823606 .popup-receipt-container').remove()
-                        
+                    const popupCssFix = (heightC = 0) => {
+                        console.log(heightC, 'heightC')
+                        $('#rec320918600 .t-popup__container').css({ height: ((heightC < 600 ? 600 : heightC) + 200) + 'px' })
                     }
-                    const login = getLogin().login
-                    const isFav = async (obj) => {
-                        let json = ''
-                        if (login) {
-                            await fetch(`https://long-cyan-antelope-hose.cyclic.app/receipt-for-one?login=${login}&receipts=receipt-fav-${id}`)
-                            .then(async (response) => {
-                                json = await response.json();
-                              })
-                            .catch((err)=> console.log(err))
+                    startReceiptSlider(arr.length / numCard, queryS)
+                    $('.receipt-link').click(function (e) {
+                        const id = $(this).attr('id')
+                        $('#rec320823606').html('')
+                        console.log($('#rec320823606 .popup-receipt-container').length)
+                        if ($('#rec320823606 .popup-receipt-container').length) {
+                            $('#rec320823606 .popup-receipt-container').remove()
+
                         }
-                              
-                        return json 
-                    }
-                    let promise = new Promise((resolve, reject) => {
-                        let isAdded = getLs(`receipt-fav-${id}`)
-                        let isAddedFromServer = isFav()
-                        resolve(isAdded || isAddedFromServer)
-                    }).then(added => {
+                        const login = getLogin().login
+
+                        fetch(`https://long-cyan-antelope-hose.cyclic.app/receipt-for-one?login=${login}`)
+                            .then(async (response) => {
+                                return await response.json();
+                            })
+                            .then(added => {
+                                const isFav = added?.props?.receipts.findIndex((el) => el === id);
+                                console.log(added?.props?.receipts)
                                 if ($('#rec320823606 .popup-receipt-container').length) {
                                     $('#rec320823606 .popup-receipt-container').remove()
-                                    
+
                                 }
-                                $('#rec320823606').append(receiptPopup(receipts[parseInt(id)], added))
+                                $('#rec320823606').append(receiptPopup(receipts[parseInt(id)], isFav > 0 ? true : false))
                                 console.log('outerHeight', $('#rec320823606 .popup-receipt-container').outerHeight())
                                 return $('#rec320823606 .popup-receipt-container').outerHeight();
-                        })
-                        .then(result => {
-                            console.log('result', result)
-                            popupCssFix(result)
-                            setTimeout(() => {
-                                console.log($('#rec320823606 .popup-receipt-container'))
-                                $('.popup-back').off().on('click', (e) => {
-                                    t390_closePopup('#rec320918600'.replace(/[^0-9]/gim, ""))
-                                })
-                                $('.popup-add-fav').off().on('click', function(e) {
-                                    const idF = $(this).attr('id')
-                                    const receiptToSend = {
-                                        login: login,
-                                        receipts: idF,
-                                        isDelete: false
-                                    }
-                                    if (!getLs(idF)) {
-                                        setLs(idF, idF)
-                                        const sendFavToServer = async (obj) => {
-                                            try{
-                                                let response = await fetch('https://long-cyan-antelope-hose.cyclic.app/receipts', {
-                                                  method: 'POST',
-                                                  headers: {
-                                                    'Content-Type': 'application/json;charset=utf-8'
-                                                  },
-                                                  body: JSON.stringify(obj)
-                                                });
-                                                console.log(response)
-                                            } catch(err) {
-                                                console.log(err)
-                                            }
-    
+                            })
+                            .then(result => {
+                                console.log('result', result)
+                                popupCssFix(result)
+                                setTimeout(() => {
+                                    console.log($('#rec320823606 .popup-receipt-container'))
+                                    $('.popup-back').off().on('click', (e) => {
+                                        t390_closePopup('#rec320918600'.replace(/[^0-9]/gim, ""))
+                                    })
+                                    $('.popup-add-fav').off().on('click', function (e) {
+                                        const idF = $(this).attr('id')
+                                        const receiptToSend = {
+                                            login: login,
+                                            receipts: idF,
+                                            isDelete: false
                                         }
-                                        sendFavToServer(receiptToSend)
-                                        $('#rec320823606 .popup-add-fav .tn-atom:nth-child(2)').html('<a href="/favorites">Добавлено в избранное</a>')
-                                        $('#rec320823606 .popup-add-fav .tn-atom:nth-child(1)').html('<a href="/favorites"><img class="tn-atom__img t-img loaded" data-original="https://static.tildacdn.com/tild3661-3038-4064-b161-346562656631/photo.svg"  imgfield="tn_img_1622382395420" src="https://static.tildacdn.com/tild3661-3038-4064-b161-346562656631/photo.svg"></a>')
-                                    } 
-                                })                                
-                            }, 200)
+                                        if (!getLs(idF)) {
+                                            setLs(idF, idF)
+                                            const sendFavToServer = async (obj) => {
+                                                try {
+                                                    let response = await fetch('https://long-cyan-antelope-hose.cyclic.app/receipts', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json;charset=utf-8'
+                                                        },
+                                                        body: JSON.stringify(obj)
+                                                    });
+                                                    console.log(response)
+                                                } catch (err) {
+                                                    console.log(err)
+                                                }
 
-                            
-                        })
-                        .catch(error => console.log(error));
-                })
-            }
+                                            }
+                                            sendFavToServer(receiptToSend)
+                                            $('#rec320823606 .popup-add-fav .tn-atom:nth-child(2)').html('<a href="/favorites">Добавлено в избранное</a>')
+                                            $('#rec320823606 .popup-add-fav .tn-atom:nth-child(1)').html('<a href="/favorites"><img class="tn-atom__img t-img loaded" data-original="https://static.tildacdn.com/tild3661-3038-4064-b161-346562656631/photo.svg"  imgfield="tn_img_1622382395420" src="https://static.tildacdn.com/tild3661-3038-4064-b161-346562656631/photo.svg"></a>')
+                                        }
+                                    })
+                                }, 200)
+
+
+                            })
+                            .catch(error => console.log(error));
+                    })
+                }
             } catch (e) {
                 console.log(e)
             }
@@ -483,7 +474,7 @@ const calcFromStock = (query) => {
         const makeCheckboxList = (num, idEl) => {
             const checkCSS = $('[data-elem-id="1621434486430"]').offset()
             const makeForm = (num, arr) => {
-                let result = `<form action="" class="dish-list" id="${dish-list-num}">`
+                let result = `<form action="" class="dish-list" id="${dish - list - num}">`
                 const array = []
                 arr.forEach((el, index) => {
                     array.push(`<input type="checkbox" name="dish-product-${index}" id="dish-product-${index}" class="dish-product">
@@ -517,7 +508,7 @@ const calcFromStock = (query) => {
                     class: "dish-list-container"
                 });
             }
-            
+
             const form = createForm(num)
             const formCon = createFormCon()
 
@@ -527,11 +518,11 @@ const calcFromStock = (query) => {
             } else {
                 catIndex = 2
             }
-            for (let i = 0; i < categoriesProducts[idEl-1].length; i++) {
-                const checkbox = createInput(i, categoriesProducts[idEl-1][i].produstSearch)
-                const label = createLabel(i, categoriesProducts[idEl-1][i].productName)
-                checkbox.attr('data-elem-search', categoriesProducts[idEl-1][i].productSearch)
-                checkbox.attr('data-elem-id', categoriesProducts[idEl-1][i].id)
+            for (let i = 0; i < categoriesProducts[idEl - 1].length; i++) {
+                const checkbox = createInput(i, categoriesProducts[idEl - 1][i].produstSearch)
+                const label = createLabel(i, categoriesProducts[idEl - 1][i].productName)
+                checkbox.attr('data-elem-search', categoriesProducts[idEl - 1][i].productSearch)
+                checkbox.attr('data-elem-id', categoriesProducts[idEl - 1][i].id)
                 checkbox.click(function (e) {
                     if ($(this).is(':checked')) {
                         $(this).attr("checked", "checked")
@@ -556,7 +547,7 @@ const calcFromStock = (query) => {
                                 if (productList[i] && productList[i].productSearch) {
                                     listProduct = true
                                     break
-                                } 
+                                }
                             }
                             measureCheck = true
                             if (!listProduct) return
@@ -608,7 +599,7 @@ const calcFromStock = (query) => {
                                             makeSearchResults($('#rec332464315'), searchResult, false)
                                         }
                                         $('#rec332450844').removeClass('well-hidden')
-                                        $('.receipt-reset').off().on('click', function(e) {
+                                        $('.receipt-reset').off().on('click', function (e) {
                                             resetCalc(query <= 1 ? true : false)
                                         })
                                     } else {
@@ -619,9 +610,9 @@ const calcFromStock = (query) => {
                                             $('#rec317292225').addClass('well-hidden')
                                             $('#rec317292231').addClass('well-hidden')
                                         }
-                                        
+
                                         $('#rec332450844').removeClass('well-hidden')
-                                        $('.receipt-reset').off().on('click', function(e) {
+                                        $('.receipt-reset').off().on('click', function (e) {
                                             resetCalc(query <= 1 ? true : false)
                                         })
 
@@ -642,9 +633,9 @@ const calcFromStock = (query) => {
                                         $('#rec317292225').addClass('well-hidden')
                                         $('#rec317292231').addClass('well-hidden')
                                     }
-                                    
+
                                     $('#rec332450844').removeClass('well-hidden')
-                                    $('.receipt-reset').off().on('click', function(e) {
+                                    $('.receipt-reset').off().on('click', function (e) {
                                         resetCalc(query <= 1 ? true : false)
                                     })
                                     $('#rec317127407').show()
@@ -696,7 +687,7 @@ const calcFromStock = (query) => {
         }
 
         let totalClicks = 0
-        
+
         const classNum = (elem, classS) => {
             let result = ''
             const arr = elem.attr('class').split(' ')
@@ -707,7 +698,7 @@ const calcFromStock = (query) => {
             })
             return result
         }
-        
+
         $('[class^="product-add"], [class*="product-add"]').off().on('click touchstart', function (event) {
             if (event.cancelable) {
                 event.preventDefault();
@@ -732,12 +723,12 @@ const calcFromStock = (query) => {
                     width: widthM + 'px'
                 })
                 if (query <= 1) {
-                    if(touchDevice) {
+                    if (touchDevice) {
                         //dishListTouchFix(measure.left, widthM, measure.top + heightM - 2)
                     }
                     sliderProductCss(main, '585', '184', 'auto')
                 } else if (query <= 2) {
-                    
+
                     sliderProductCss(main, '475', '184', 'auto')
                 } else if (query <= 3) {
                     sliderProductCss(main, '445', '184', 'auto')
