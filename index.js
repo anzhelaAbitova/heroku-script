@@ -159,7 +159,7 @@
 // example.js
 
 const CyclicDB = require('cyclic-dynamodb')
-const db = CyclicDB("frantic-puce-earmuffsCyclicDB") // find it on the Database/Storage tab
+const db = CyclicDB("long-cyan-antelope-hoseCyclicDB") 
 
 const run = async function () {
   let receipts = db.collection('receipts')
