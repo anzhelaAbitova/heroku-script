@@ -21,24 +21,27 @@ app.use(flash())
 app.use(methodOverride('_method'))
 
 var corsOptions = {
-  origin: 'https://anastashasuvorova.ru/',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  origin: 'https://anastashasuvorova.ru',
+  optionsSuccessStatus: 200,
+  methods: 'GET, PUT, POST, DELETE',
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+  credentials: true
 }
-app.use(async (req, res, next) => {
+// app.use(async (req, res, next) => {
 
-  // if (req.xhr) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://anastashasuvorova.ru/')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-    )
-    next()
-  // } else {
-  //   res.status(400).end('400 Bad Request')
-  // }
-})
+//   // if (req.xhr) {
+//     res.setHeader('Access-Control-Allow-Origin', 'https://anastashasuvorova.ru/')
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
+//     res.setHeader('Access-Control-Allow-Credentials', true)
+//     res.setHeader(
+//       'Access-Control-Allow-Headers',
+//       'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+//     )
+//     next()
+//   // } else {
+//   //   res.status(400).end('400 Bad Request')
+//   // }
+// })
 
 app.post('/receipts', cors(corsOptions), async (req, res) => {
   try {
