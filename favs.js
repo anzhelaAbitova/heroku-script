@@ -349,7 +349,6 @@ $(document).ready(function () {
             const query = winSizeMatch(queries)
 
             const promiseR = new Promise((resolve, reject) => {
-                const arrServer = makeFavList()
                 return resolve(makeFavList());
             });
             promiseR
