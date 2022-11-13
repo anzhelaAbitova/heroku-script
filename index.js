@@ -75,21 +75,13 @@ app.post('/receipts', async (req, res) => {
 
   app.get('/receipts', (req, res) => {
     const loginQ = req.body.login || req.query.login
-    // Receipts.findOne({userLogin: loginQ}, (err, docs) => {
-    //   if (err) {
-    //     console.log(err);
-    //     return res.sendStatus(500);
-    //   }
-    //   console.log(docs.receipts)
-    //   return res.send(docs.receipts);
-    // })
-    Receipts.find({}, (err, docs) => {
+    Receipts.findOne({userLogin: loginQ}, (err, docs) => {
       if (err) {
         console.log(err);
         return res.sendStatus(500);
       }
-      console.log(docs)
-      return res.send(docs);
+      console.log(docs.receipts)
+      return res.send(docs.receipts);
     })
   })
 
@@ -118,7 +110,7 @@ app.post('/receipts', async (req, res) => {
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
-    // we're connected!
+    console.log(`we're connected!`);
   });
   app.listen(port);
   console.log('Server running on port 3000');
