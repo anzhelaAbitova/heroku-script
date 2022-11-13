@@ -20,6 +20,7 @@ app.use(methodOverride('_method'))
 app.use(cors())
 
 app.use(async (req, res, next) => {
+  console.log(req)
   if (req.xhr) {
     res.setHeader('Access-Control-Allow-Origin', 'https://anastashasuvorova.ru/')
     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
