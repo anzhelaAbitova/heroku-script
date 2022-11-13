@@ -139,7 +139,7 @@ app.get('/receipt-for-one', (req, res) => {
 // //     console.log(`we're connected!`);
 // //   });
 
-app.listen(port, ()=> {
+app.listen(port, (err)=> {
   if(err) console.log(err)
   console.log('Server running on port 3000');
 });
