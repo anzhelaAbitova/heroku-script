@@ -52,6 +52,7 @@ app.post('/receipts', async (req, res) => {
     const loginQ = req.body.login || req.query.login
     const receiptsQ = req.body.receipts || req.query.receipts
     let oldReceipts = await receipts.get(loginQ)
+    console.log(receiptsQ, oldReceipts)
     let item = await receipts.set(loginQ, {
       receipts: [
         [].concat(oldReceipts, [receiptsQ])
