@@ -124,7 +124,7 @@ app.get('/receipt-for-one', (req, res) => {
 //   db.once('open', function() {
 //     console.log(`we're connected!`);
 //   });
-app.use('/', dynamoRoute);
+
 app.listen(port);
 function handleError(err, res) {
   res.json({
