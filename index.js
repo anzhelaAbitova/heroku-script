@@ -51,7 +51,9 @@ app.post('/receipts', async (req, res) => {
   try {
     const loginQ = req.body.login || req.query.login
     const receiptsQ = req.body.receipts || req.query.receipts
+    let item = await receipts.get(loginQ)
     console.log(req.query)
+    return res.send(item);
 //     let search = ''
 //     // Receipts.findOne({userLogin: loginQ}, (err, obj) => {
 //     //     if(err){
@@ -105,6 +107,7 @@ app.get('/receipts', async (req, res) => {
   const loginQ = req.body.login || req.query.login;
   let item = await receipts.get(loginQ)
     console.log(item)
+    return res.send(item);
 //   Receipts.findOne({ userLogin: loginQ }, (err, docs) => {
 //     if (err) {
 //       console.log(err);
@@ -120,6 +123,7 @@ app.get('/receipt-for-one', async (req, res) => {
   const receiptsQ = req.body.receipts || req.query.receipts
   let item = await receipts.get(loginQ)
   console.log(item)
+  return res.send(item);
 //   // Receipts.findOne({userLogin: loginQ}, (err, obj) => {
 //   //   if (err) {
 //   //     console.log(err);
