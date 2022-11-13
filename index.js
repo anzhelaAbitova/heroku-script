@@ -11,7 +11,7 @@ const flash = require('express-flash')
 const { v4: uuidv4 } = require('uuid');
 const CyclicDB = require('cyclic-dynamodb')
 const db = CyclicDB("long-cyan-antelope-hoseCyclicDB") 
-const tableName = 'frantic-puce-earmuffsCyclicDB';
+let receipts = db.collection('receipts')
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json())
@@ -25,7 +25,7 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(async (req, res, next) => {
-  console.log(req)
+
   // if (req.xhr) {
     res.setHeader('Access-Control-Allow-Origin', 'https://anastashasuvorova.ru/')
     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
@@ -96,7 +96,7 @@ app.post('/receipts', cors(corsOptions), async (req, res) => {
 
 app.get('/receipts', async (req, res) => {
   const loginQ = req.body.login || req.query.login;
-  let item = await animals.get(loginQ)
+  let item = await receipts.get(loginQ)
     console.log(item)
 //   Receipts.findOne({ userLogin: loginQ }, (err, docs) => {
 //     if (err) {
@@ -111,7 +111,7 @@ app.get('/receipts', async (req, res) => {
 app.get('/receipt-for-one', cors(corsOptions), async (req, res) => {
   const loginQ = req.body.login || req.query.login
   const receiptsQ = req.body.receipts || req.query.receipts
-  let item = await animals.get(loginQ)
+  let item = await receipts.get(loginQ)
   console.log(item)
 //   // Receipts.findOne({userLogin: loginQ}, (err, obj) => {
 //   //   if (err) {
