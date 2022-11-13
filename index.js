@@ -51,9 +51,10 @@ app.post('/receipts', async (req, res) => {
   try {
     const loginQ = req.body.login || req.query.login
     const receiptsQ = req.body.receipts || req.query.receipts
+    let oldReceipts = await receipts.get(loginQ)
     let item = await receipts.set(loginQ, {
       receipts: [
-        receiptsQ
+        [].concat(oldReceipts, [receiptsQ])
       ]
     })
     console.log(item)
@@ -61,7 +62,7 @@ app.post('/receipts', async (req, res) => {
         console.error("Unable to add item.");
         console.error("Error JSON:", JSON.stringify(err, null, 2));
       } else {
-        console.log("Added item:", JSON.stringify(data, null, 2));
+        return res.sendStatus(200);
       }
 //     let search = ''
 //     // Receipts.findOne({userLogin: loginQ}, (err, obj) => {
