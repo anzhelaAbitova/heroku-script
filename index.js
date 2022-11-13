@@ -1,7 +1,12 @@
 const express = require('express')
 const cors = require('cors');
 const app = express()
-app.use(cors())
+app.use(cors({
+  origin: 'https://anastashasuvorova.ru',
+  optionsSuccessStatus: 200,
+  methods: 'GET, PUT, POST, DELETE',
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+}));
 // let AWS = require('aws-sdk');
 // let docClient = new AWS.DynamoDB.DocumentClient();
 const bodyParser = require('body-parser');
@@ -20,12 +25,12 @@ app.use(flash())
 // app.use(cors())
 app.use(methodOverride('_method'))
 
-var corsOptions = {
-  origin: 'https://anastashasuvorova.ru',
-  optionsSuccessStatus: 200,
-  methods: 'GET, PUT, POST, DELETE',
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-}
+// var corsOptions = {
+//   origin: 'https://anastashasuvorova.ru',
+//   optionsSuccessStatus: 200,
+//   methods: 'GET, PUT, POST, DELETE',
+//   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+// }
 // app.use(async (req, res, next) => {
 
 //   // if (req.xhr) {
@@ -42,7 +47,7 @@ var corsOptions = {
 //   // }
 // })
 
-app.post('/receipts', cors(corsOptions), async (req, res) => {
+app.post('/receipts', async (req, res) => {
   try {
     const loginQ = req.body.login || req.query.login
     const receiptsQ = req.body.receipts || req.query.receipts
@@ -110,7 +115,7 @@ app.get('/receipts', async (req, res) => {
 //   })
 })
 
-app.get('/receipt-for-one', cors(corsOptions), async (req, res) => {
+app.get('/receipt-for-one', async (req, res) => {
   const loginQ = req.body.login || req.query.login
   const receiptsQ = req.body.receipts || req.query.receipts
   let item = await receipts.get(loginQ)
