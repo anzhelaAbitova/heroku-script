@@ -1,12 +1,6 @@
 let AWS = require('aws-sdk');
 let express = require('express');
 let router = express.Router();
-let config = require('./config/dev');
-AWS.config.update({
- "region": "",
- "accessKeyId": "",
- "secretAccessKey": ""
-});
 
 let docClient = new AWS.DynamoDB.DocumentClient();
 let table = "sports";
