@@ -55,7 +55,7 @@ app.post('/receipts', async (req, res) => {
     console.log(receiptsQ, oldReceipts)
     let item = await receipts.set(loginQ, {
       receipts: [
-        [].concat(oldReceipts, [receiptsQ])
+        [].concat(oldReceipts?.props?.receipts, [receiptsQ])
       ]
     })
     console.log(item)
