@@ -1,48 +1,48 @@
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config()
-// }
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
-// const express = require('express')
-// const app = express()
+const express = require('express')
+const app = express()
 // let AWS = require('aws-sdk');
 // let docClient = new AWS.DynamoDB.DocumentClient();
-// const bodyParser = require('body-parser');
-// const methodOverride = require('method-override');
-// const flash = require('express-flash')
-// const cors = require('cors');
-// const { v4: uuidv4 } = require('uuid');
-// // const Receipts = require('./models/receipts').Receipts;
-// const tableName = 'frantic-puce-earmuffsCyclicDB';
-// const host = '127.0.0.1'
-// const port = process.env.PORT || 3000;
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const flash = require('express-flash')
+const cors = require('cors');
+const { v4: uuidv4 } = require('uuid');
+const CyclicDB = require('cyclic-dynamodb')
+const db = CyclicDB("long-cyan-antelope-hoseCyclicDB") 
+const tableName = 'frantic-puce-earmuffsCyclicDB';
+const port = process.env.PORT || 3000;
 
-// app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(flash())
-// // app.use(cors())
-// app.use(methodOverride('_method'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(flash())
 // app.use(cors())
+app.use(methodOverride('_method'))
+app.use(cors())
 
-// app.use(async (req, res, next) => {
-//   if (req.xhr) {
-//     res.setHeader('Access-Control-Allow-Origin', 'https://anastashasuvorova.ru/')
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
-//     res.setHeader('Access-Control-Allow-Credentials', true)
-//     res.setHeader(
-//       'Access-Control-Allow-Headers',
-//       'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-//     )
-//     next()
-//   } else {
-//     res.status(400).end('400 Bad Request')
-//   }
-// })
+app.use(async (req, res, next) => {
+  if (req.xhr) {
+    res.setHeader('Access-Control-Allow-Origin', 'https://anastashasuvorova.ru/')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    )
+    next()
+  } else {
+    res.status(400).end('400 Bad Request')
+  }
+})
 
-// app.post('/receipts', async (req, res) => {
-//   try {
-//     const loginQ = req.body.login || req.query.login
-//     const receiptsQ = req.body.receipts || req.query.receipts
-//     console.log(req.query)
+app.post('/receipts', async (req, res) => {
+  try {
+    const loginQ = req.body.login || req.query.login
+    const receiptsQ = req.body.receipts || req.query.receipts
+    console.log(req.query)
 //     let search = ''
 //     // Receipts.findOne({userLogin: loginQ}, (err, obj) => {
 //     //     if(err){
@@ -86,14 +86,16 @@
 //         console.log("Added item:", JSON.stringify(data, null, 2));
 //       }
 //     });
-//   } catch (err) {
-//     console.log(err);
-//     return res.sendStatus(500);
-//   }
-// })
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+})
 
-// app.get('/receipts', (req, res) => {
-//   const loginQ = req.body.login || req.query.login
+app.get('/receipts', async (req, res) => {
+  const loginQ = req.body.login || req.query.login;
+  let item = await animals.get(loginQ)
+    console.log(item)
 //   Receipts.findOne({ userLogin: loginQ }, (err, docs) => {
 //     if (err) {
 //       console.log(err);
@@ -102,11 +104,11 @@
 //     console.log(docs.receipts)
 //     return res.send(docs.receipts);
 //   })
-// })
+})
 
-// app.get('/receipt-for-one', (req, res) => {
-//   const loginQ = req.body.login || req.query.login
-//   const receiptsQ = req.body.receipts || req.query.receipts
+app.get('/receipt-for-one', (req, res) => {
+  const loginQ = req.body.login || req.query.login
+  const receiptsQ = req.body.receipts || req.query.receipts
 //   // Receipts.findOne({userLogin: loginQ}, (err, obj) => {
 //   //   if (err) {
 //   //     console.log(err);
@@ -129,7 +131,7 @@
 //       handleSuccess(data.Item, res);
 //     }
 //   });
-// })
+})
 
 // //   mongoose.set('useCreateIndex', true);
 
@@ -141,48 +143,17 @@
 // //     console.log(`we're connected!`);
 // //   });
 
-// app.listen(port);
-// function handleError(err, res) {
-//   res.json({
-//     'message': 'server side error', statusCode: 500, error:
-//       err
-//   });
-// }
-
-// function handleSuccess(data, res) {
-//   res.json({ message: 'success', statusCode: 200, data: data })
-// }
-// console.log('Server running on port 3000');
-
-
-
-// example.js
-
-const CyclicDB = require('cyclic-dynamodb')
-const db = CyclicDB("long-cyan-antelope-hoseCyclicDB") 
-
-const run = async function () {
-  let receipts = db.collection('receipts')
-
-  // create an item in collection with key "leo"
-  let leo = await receipts.set('example@gmail.com', {
-    receipts: [
-      "receipts-fav-188",
-      "receipt-fav-227",
-      "receipt-fav-235",
-      "receipt-fav-1",
-      "receipt-fav-231",
-      "receipt-fav-23",
-      "receipt-fav-17",
-      "receipt-fav-25",
-      "receipt-fav-36",
-      "receipt-fav-15",
-      "receipt-fav-238"
-    ]
-  })
-
-  // get an item at key "leo" from collection receipts
-  let item = await receipts.get('example@gmail.com')
-  console.log(item)
+app.listen(port, ()=> {
+  if(err) console.log(err)
+  console.log('Server running on port 3000');
+});
+function handleError(err, res) {
+  res.json({
+    'message': 'server side error', statusCode: 500, error:
+      err
+  });
 }
-run()
+
+function handleSuccess(data, res) {
+  res.json({ message: 'success', statusCode: 200, data: data })
+}
