@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+app.use(cors())
 // let AWS = require('aws-sdk');
 // let docClient = new AWS.DynamoDB.DocumentClient();
 const bodyParser = require('body-parser');
@@ -17,8 +18,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(flash())
 // app.use(cors())
 app.use(methodOverride('_method'))
-app.use(cors())
 
+var corsOptions = {
+  origin: 'https://anastashasuvorova.ru/',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 app.use(async (req, res, next) => {
   console.log(req)
   // if (req.xhr) {
@@ -35,7 +39,7 @@ app.use(async (req, res, next) => {
   // }
 })
 
-app.post('/receipts', async (req, res) => {
+app.post('/receipts', cors(corsOptions), async (req, res) => {
   try {
     const loginQ = req.body.login || req.query.login
     const receiptsQ = req.body.receipts || req.query.receipts
@@ -103,9 +107,11 @@ app.get('/receipts', async (req, res) => {
 //   })
 })
 
-app.get('/receipt-for-one', (req, res) => {
+app.get('/receipt-for-one', cors(corsOptions), async (req, res) => {
   const loginQ = req.body.login || req.query.login
   const receiptsQ = req.body.receipts || req.query.receipts
+  let item = await animals.get(loginQ)
+  console.log(item)
 //   // Receipts.findOne({userLogin: loginQ}, (err, obj) => {
 //   //   if (err) {
 //   //     console.log(err);
